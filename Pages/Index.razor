@@ -1,0 +1,109 @@
+﻿@page "/"
+
+<h4>Select in dropdown - Click TriggerType</h4>
+<Dropdown Trigger="@(new TriggerType[] { TriggerType.Click })">
+    <Overlay>
+        <Card>
+            <Select DataSource="@_list"
+                    @bind-Value="@_selectedValue1"
+                    DefaultValue="@("lucy")"
+                    ValueName="@nameof(Person.Value)"
+                    LabelName="@nameof(Person.Name)"
+                    DisabledName="@nameof(Person.IsDisabled)"
+                    Style="width:120px">
+            </Select>
+        </Card>
+    </Overlay>
+    <ChildContent>
+        <a class="ant-dropdown-link" @onclick:preventDefault>
+            Click me <Icon Type="down" />
+        </a>
+    </ChildContent>
+</Dropdown>
+
+<h4>Select in dropdown - Default TriggerType (Hover)</h4>
+<Dropdown>
+    <Overlay>
+        <Card>
+            <Select DataSource="@_list"
+                    @bind-Value="@_selectedValue1"
+                    DefaultValue="@("lucy")"
+                    ValueName="@nameof(Person.Value)"
+                    LabelName="@nameof(Person.Name)"
+                    DisabledName="@nameof(Person.IsDisabled)"
+                    Style="width:120px">
+            </Select>
+        </Card>
+    </Overlay>
+    <ChildContent>
+        <a class="ant-dropdown-link" @onclick:preventDefault>
+            Click me <Icon Type="down" />
+        </a>
+    </ChildContent>
+</Dropdown>
+
+
+<h4>Select in dropdown - Click TriggerType (Poor Workaround)</h4>
+<Dropdown Trigger="@_triggerTypes" OnVisibleChange="OnDropdownVisibleChanged">
+    <Overlay>
+        <Card>
+            <Select DataSource="@_list"
+                    @bind-Value="@_selectedValue1"
+                    DefaultValue="@("lucy")"
+                    ValueName="@nameof(Person.Value)"
+                    LabelName="@nameof(Person.Name)"
+                    DisabledName="@nameof(Person.IsDisabled)"
+                    Style="width:120px">
+            </Select>
+        </Card>
+    </Overlay>
+    <ChildContent>
+        <a class="ant-dropdown-link" @onclick:preventDefault>
+            Click me <Icon Type="down" />
+        </a>
+    </ChildContent>
+</Dropdown>
+
+@code {
+
+    // Select example from documentation
+
+    List<Person> _list;
+    string _selectedValue1, _selectedValue2, _selectedValue3;
+    string _selectedValue4 = "lucy";
+    class Person
+    {
+        public string Value { get; set; }
+        public string Name { get; set; }
+        public bool IsDisabled { get; set; }
+    }
+
+    protected override void OnInitialized()
+    {
+        _list = new List<Person>
+        {
+            new Person {Value = "jack", Name = "Jack"},
+            new Person {Value = "lucy", Name = "Lucy"},
+            new Person {Value = "disabled", Name = "Disabled", IsDisabled = true},
+            new Person {Value = "yaoming", Name = "YaoMing"}
+        };
+    }
+
+
+    // Workaround code 
+
+    private TriggerType[] _triggerTypes = new TriggerType[] { TriggerType.Click };
+
+    private void OnDropdownVisibleChanged(bool visible)
+    {
+        if (visible)
+        {
+            _triggerTypes = new TriggerType[] { TriggerType.Hover };
+        }
+        else
+        {
+            _triggerTypes = new TriggerType[] { TriggerType.Click };
+        }
+    }
+
+} 
