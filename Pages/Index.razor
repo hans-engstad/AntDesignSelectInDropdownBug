@@ -64,6 +64,54 @@
     </ChildContent>
 </Dropdown>
 
+
+<h4>Select in dropdown - Default TriggerType (Suggestion from anranruye)</h4>
+<Dropdown>
+    <Overlay>
+        <div id="container"></div>
+        <Card>
+            <Select DataSource="@_list"
+                    @bind-Value="@_selectedValue1"
+                    DefaultValue="@("lucy")"
+                    ValueName="@nameof(Person.Value)"
+                    LabelName="@nameof(Person.Name)"
+                    DisabledName="@nameof(Person.IsDisabled)"
+                    Style="width:120px"
+                    PopupContainerSelector="#container">
+            </Select>
+        </Card>
+    </Overlay>
+    <ChildContent>
+        <a class="ant-dropdown-link" @onclick:preventDefault>
+            Click me <Icon Type="down" />
+        </a>
+    </ChildContent>
+</Dropdown>
+
+
+<h4>Select in dropdown - Suggestion from anranruye with Click</h4>
+<Dropdown Trigger="@(new TriggerType[] { TriggerType.Click })">
+    <Overlay>
+        <div id="container2"></div>
+        <Card>
+            <Select DataSource="@_list"
+                    @bind-Value="@_selectedValue1"
+                    DefaultValue="@("lucy")"
+                    ValueName="@nameof(Person.Value)"
+                    LabelName="@nameof(Person.Name)"
+                    DisabledName="@nameof(Person.IsDisabled)"
+                    Style="width:120px"
+                    PopupContainerSelector="#container2">
+            </Select>
+        </Card>
+    </Overlay>
+    <ChildContent>
+        <a class="ant-dropdown-link" @onclick:preventDefault>
+            Click me <Icon Type="down" />
+        </a>
+    </ChildContent>
+</Dropdown>
+
 @code {
 
     // Select example from documentation
@@ -81,7 +129,7 @@
     protected override void OnInitialized()
     {
         _list = new List<Person>
-        {
+{
             new Person {Value = "jack", Name = "Jack"},
             new Person {Value = "lucy", Name = "Lucy"},
             new Person {Value = "disabled", Name = "Disabled", IsDisabled = true},
@@ -90,7 +138,7 @@
     }
 
 
-    // Workaround code 
+    // Workaround code
 
     private TriggerType[] _triggerTypes = new TriggerType[] { TriggerType.Click };
 
